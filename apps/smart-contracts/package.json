@@ -1,0 +1,16 @@
+{
+  "name": "@ogswap/smart-contracts",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "npx thirdweb@latest detect",
+    "deploy": "npx thirdweb@latest deploy",
+    "release": "npx thirdweb@latest release"
+  },
+  "devDependencies": {
+    "hardhat": "^2.10.1"
+  },
+  "dependencies": {
+    "@thirdweb-dev/contracts": "^3"
+  }
+}
