@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST={"../core/components/app-layout.tsx -> react-draggable":{"id":"../core/components/app-layout.tsx -> react-draggable","files":["static/chunks/node_modules_pnpm_react-draggable_4_4_5_biqbaboplfbrettd7655fr4n2y_node_modules_react-draggab-bd2f57.js"]},"_app.tsx -> ../core/theme-context":{"id":"_app.tsx -> ../core/theme-context","files":[]}}
