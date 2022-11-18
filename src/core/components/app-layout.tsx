@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode, useRef } from "react";
@@ -26,20 +27,19 @@ const routes = [
   {
     path: "/",
     name: "Swap",
+    icon: "/assets/netmeeting-2.png",
   },
   {
     path: "/pool",
-    name: "Liqudity Pool",
+    name: "Pools",
+    icon: "/assets/cardfile-1.png",
   },
   {
     path: "/settings",
     name: "Settings",
+    icon: "/assets/settings_gear_cool-5.png",
   },
 ];
-
-const LogoButton = styled(Button)`
-  font-weight: bold;
-`;
 
 const LogoMenu = styled(MenuList)`
   position: absolute;
@@ -55,9 +55,25 @@ function Logo() {
 
   return (
     <>
-      <LogoButton active={value} onClick={setTrue}>
-        OgSwap
-      </LogoButton>
+      <Button
+        active={value}
+        onClick={setTrue}
+        style={{
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          padding: "0.25rem 0.5rem",
+        }}
+      >
+        <Image
+          src="/assets/regedit-0.png"
+          alt="Logo Icon"
+          width={32}
+          height={32}
+        />
+        <span>OgSwap</span>
+      </Button>
       {value && (
         <LogoMenu ref={ref}>
           <MenuListItem>
@@ -119,7 +135,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
             resize: "both",
             position: "relative",
             maxWidth: "36rem",
-            height: "48rem",
           }}
         >
           <WindowHeader
@@ -136,8 +151,21 @@ export function AppLayout({ children }: { children: ReactNode }) {
                   <Tab
                     selected={currentRoute === route.path}
                     value={route.path}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      paddingLeft: "0.25rem",
+                      paddingRight: "1rem",
+                    }}
                   >
-                    {route.name}
+                    <Image
+                      src={route.icon}
+                      alt={route.name}
+                      width={32}
+                      height={32}
+                    />
+                    <span>{route.name}</span>
                   </Tab>
                 </Link>
               ))}
