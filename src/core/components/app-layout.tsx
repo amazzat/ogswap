@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { ReactNode, useRef } from "react";
 import {
   Anchor,
-  AppBar,
   Button,
   MenuList,
   MenuListItem,
@@ -37,6 +36,11 @@ const routes = [
   {
     path: "/settings",
     name: "Settings",
+    icon: "/assets/settings_gear_cool-5.png",
+  },
+  {
+    path: "/about",
+    name: "About",
     icon: "/assets/settings_gear_cool-5.png",
   },
 ];
@@ -119,11 +123,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <Wrapper>
-      <AppBar position="static">
-        <StyledToolbar>
-          <Logo />
-        </StyledToolbar>
-      </AppBar>
       <Draggable
         defaultPosition={{
           y: height / 4,
@@ -140,9 +139,19 @@ export function AppLayout({ children }: { children: ReactNode }) {
           <WindowHeader
             style={{
               cursor: "grab",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.25rem 0.5rem",
             }}
           >
-            OgSwap.exe
+            <Image
+              src="/assets/regedit-0.png"
+              alt="Logo Icon"
+              width={32}
+              height={32}
+            />
+            <span>OgSwap.exe</span>
           </WindowHeader>
           <WindowContent>
             <Tabs value={currentRoute}>
