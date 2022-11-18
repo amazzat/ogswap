@@ -3,14 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "npx thirdweb@latest detect",
-    "deploy": "npx thirdweb@latest deploy",
-    "release": "npx thirdweb@latest release"
+    "build": "thirdweb detect",
+    "deploy": "thirdweb deploy",
+    "release": "thirdweb release"
   },
   "devDependencies": {
-    "hardhat": "^2.10.1"
+    "hardhat": "^2.10.1",
+    "thirdweb": "^0.8.16"
   },
   "dependencies": {
-    "@thirdweb-dev/contracts": "^3"
+    "@openzeppelin/contracts": "^4.8.0"
   }
 }
