@@ -1,11 +1,7 @@
 import {
-  Button,
-  Frame,
-  GroupBox,
-  NumberInput,
-  Select,
+  Button, GroupBox, Select,
   TextInput,
-  Tooltip,
+  Tooltip
 } from "react95";
 import styled from "styled-components";
 
@@ -68,12 +64,6 @@ export default function Exchange() {
       >
         Swap
       </Button>
-      <Frame
-        variant="status"
-        style={{ width: "100%", marginTop: "2rem", padding: "0.5rem 1rem" }}
-      >
-        Status: Online
-      </Frame>
     </div>
   );
 }

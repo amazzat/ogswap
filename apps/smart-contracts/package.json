@@ -12,6 +12,7 @@
     "thirdweb": "^0.8.16"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.0"
+    "@openzeppelin/contracts": "^4.8.0",
+    "@thirdweb-dev/contracts": "^3.2.5"
   }
 }

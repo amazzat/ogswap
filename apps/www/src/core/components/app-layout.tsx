@@ -1,14 +1,26 @@
+import {
+  ConnectWallet,
+  useAddress,
+  useCoinbaseWallet,
+  useConnect,
+  useMetamask,
+  useNetwork,
+  useWalletConnect,
+} from "@thirdweb-dev/react";
+import { ChainId, SUPPORTED_CHAIN_IDS } from "@thirdweb-dev/sdk";
+import { atom, useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import {
-  Anchor,
   Button,
+  Counter,
+  Frame,
+  Handle,
   MenuList,
   MenuListItem,
-  Separator,
   Tab,
   TabBody,
   Tabs,
@@ -41,68 +53,9 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    icon: "/assets/settings_gear_cool-5.png",
+    icon: "/assets/help_book_small-2.png",
   },
 ];
-
-const LogoMenu = styled(MenuList)`
-  position: absolute;
-  left: 0;
-  top: 100%;
-`;
-
-function Logo() {
-  const ref = useRef(null);
-  const { value, setFalse, setTrue } = useBoolean();
-
-  useOnClickOutside(ref, setFalse);
-
-  return (
-    <>
-      <Button
-        active={value}
-        onClick={setTrue}
-        style={{
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: "0.25rem 0.5rem",
-        }}
-      >
-        <Image
-          src="/assets/regedit-0.png"
-          alt="Logo Icon"
-          width={32}
-          height={32}
-        />
-        <span>OgSwap</span>
-      </Button>
-      {value && (
-        <LogoMenu ref={ref}>
-          <MenuListItem>
-            <Link href="/">
-              <Anchor>About</Anchor>
-            </Link>
-          </MenuListItem>
-          <Separator />
-          <MenuListItem>
-            <Link href="/">
-              <Anchor>Telegram</Anchor>
-            </Link>
-          </MenuListItem>
-          <MenuListItem>
-            <Link href="/">
-              <Anchor>Github</Anchor>
-            </Link>
-          </MenuListItem>
-          <Separator />
-          <MenuListItem>A&E CS2005</MenuListItem>
-        </LogoMenu>
-      )}
-    </>
-  );
-}
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -111,15 +64,72 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.desktopBackground};
 `;
 
-const StyledToolbar = styled(Toolbar)`
-  display: flex;
-  justify-content: space-between;
-`;
+function ConnectButton() {
+  const { setFalse, setTrue, value } = useBoolean();
+  const connectWithMetamask = useMetamask();
+  const connectWithCoinbaseWallet = useCoinbaseWallet();
+  const connectWithWalletConnect = useWalletConnect();
+
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, setFalse);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+      }}
+    >
+      <Button variant="menu" size="sm" onClick={setTrue}>
+        Connect
+      </Button>
+      {value && (
+        <MenuList
+          ref={ref}
+          style={{
+            zIndex: 100,
+            top: "100%",
+            left: 0,
+            position: "absolute",
+          }}
+        >
+          <MenuListItem
+            onClick={connectWithMetamask}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            MetaMask
+          </MenuListItem>
+          <MenuListItem
+            onClick={connectWithCoinbaseWallet}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            Coinbase Wallet
+          </MenuListItem>
+          <MenuListItem
+            onClick={connectWithWalletConnect}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            WalletConnect
+          </MenuListItem>
+        </MenuList>
+      )}
+    </div>
+  );
+}
+
 
 export function AppLayout({ children }: { children: ReactNode }) {
   const { height, width } = useWindowSize();
   const router = useRouter();
   const currentRoute = router.pathname;
+  const address = useAddress();
+  const [network, switchNetwork] = useNetwork();
 
   return (
     <Wrapper>
@@ -153,6 +163,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
             />
             <span>OgSwap.exe</span>
           </WindowHeader>
+          <Toolbar>
+            <ConnectButton />
+            <Button variant="menu" size="sm" disabled>
+              Logout
+            </Button>
+          </Toolbar>
           <WindowContent>
             <Tabs value={currentRoute}>
               {routes.map((route) => (
@@ -180,6 +196,30 @@ export function AppLayout({ children }: { children: ReactNode }) {
               ))}
             </Tabs>
             <TabBody>{children}</TabBody>
+            <Frame
+              variant="status"
+              style={{
+                width: "100%",
+                marginTop: "2rem",
+                padding: "0.5rem 1rem",
+              }}
+            >
+              {address && !network.loading && (
+                <div
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Connected to{" "}
+                  
+                    {network.data.chain?.name}
+                  {" "}
+                  {address}
+                </div>
+              )}
+            </Frame>
           </WindowContent>
         </Window>
       </Draggable>
