@@ -12,3 +12,13 @@ Factory is router-like contract that keeps track of created exchanges (liquidity
 Exchange is contract that swaps Erc20 token to Eth. It uses uniswap v1's automated market maker (AMM). It uses own Erc20 token (**OGSWP**) to keep track of liqudity pool share. As pricing model we keep little share - 1% from users.
 
 Made by Azamat Zulpykhar Azamat & Elaman Zholaman CS2005
+
+Instructions:
+```bash
+# Clone repo
+cd ogswap
+# If you don't have pnpm, install node (16+) and run "corepack enable"
+pnpm install
+cd apps/www # Frontend
+pnpm dev
+```
